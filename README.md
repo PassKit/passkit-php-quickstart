@@ -9,7 +9,8 @@ This quickstart aims to help  get PHP developers up and running with the PassKit
 
 You will need the following:
 - PHP 7.0 or higher [Installation Guide](https://grpc.io/docs/languages/php/quickstart/)
-- PECL 
+- PEAR [Installation Guide](https://pear.php.net/manual/en/installation.php) 
+- PECL [Mac Installation Guide](https://blackdeerdev.com/install-pecl-pear-on-mac-osx/),  [Windows Installation Guide](https://wiki.php.net/internals/windows/stepbystepbuild#building_pecl_extensions)
 - Composer [Download Here](https://getcomposer.org/) ([Installation Guide](https://getcomposer.org/download/) )
 - A PassKit account (signup for free at [PassKit](https://app.passkit.com))
 - Your PassKit SDK Credentials (available from the [Developer Tools Page](https://app.passkit.com/app/account/developer-tools))

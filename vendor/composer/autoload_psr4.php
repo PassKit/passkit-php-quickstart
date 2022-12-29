@@ -6,14 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
-    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
-    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'Single_use_coupons\\' => array($baseDir . '/lib/Single_use_coupons', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Single_use_coupons'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
-    'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
-    'Protobuf\\' => array($vendorDir . '/protobuf-php/protobuf/src'),
-    'OpenApi\\' => array($vendorDir . '/zircote/swagger-php/src'),
+    'Scheduler\\' => array($baseDir . '/lib/Scheduler', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Scheduler'),
+    'Raw\\' => array($baseDir . '/lib/Raw', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Raw'),
     'Members\\' => array($baseDir . '/lib/Members', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Members'),
     'Io\\' => array($baseDir . '/lib/Io', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Io'),
     'Grpc\\' => array($vendorDir . '/grpc/grpc/src/lib'),
@@ -22,10 +17,10 @@ return array(
     'GPBMetadata\\Io\\' => array($baseDir . '/lib/GPBMetadata/Io', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/GPBMetadata/Io'),
     'GPBMetadata\\Google\\Protobuf\\' => array($vendorDir . '/google/protobuf/src/GPBMetadata/Google/Protobuf'),
     'GPBMetadata\\Google\\' => array($baseDir . '/lib/extra/GPBMetadata/Google', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/extra/GPBMetadata/Google'),
+    'GPBMetadata\\Ct\\' => array($baseDir . '/lib/GPBMetadata/Ct', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/GPBMetadata/Ct'),
     'Flights\\' => array($baseDir . '/lib/Flights', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Flights'),
     'Event_tickets\\' => array($baseDir . '/lib/Event_tickets', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Event_tickets'),
-    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib/Doctrine/Common/Lexer'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
+    'Ct\\' => array($baseDir . '/lib/Ct', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Ct'),
     'Cabin_codes\\' => array($baseDir . '/lib/Cabin_codes', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Cabin_codes'),
     'Analytics\\' => array($baseDir . '/lib/Analytics', $vendorDir . '/passkit/passkit-php-grpc-sdk/lib/Analytics'),
 );

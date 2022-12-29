@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND MEMBER
-$memberId = "memberId";
-$programId = "programId";
-$tierId = "tierId";
+$memberId = "";
+$programId = "";
+$tierId = "";
 // set-points takes a memberId of existing member to set points of a chosen member.
 try {
     $ca_filename = "ca-chain.pem";
@@ -28,15 +28,15 @@ try {
     $memberPointsRequest = new \Members\SetPointsRequest();
     $memberPointsRequest->setId($memberId);
     $memberPointsRequest->setPoints(2000);
-    $memberPointsRequest->setSecondaryPoints(1000);
-    $memberPointsRequest->setTierPoints(100);
+    //$memberPointsRequest->setSecondaryPoints(1000);
+    //$memberPointsRequest->setTierPoints(100);
 
     list($result, $status) = $client->setPoints($memberPointsRequest)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Set points of member " . $result->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

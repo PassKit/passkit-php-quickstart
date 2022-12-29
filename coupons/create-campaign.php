@@ -1,6 +1,4 @@
 <?php
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
@@ -24,14 +22,14 @@ try {
     // Set the campaign body
     $campaign = new Single_use_coupons\CouponCampaign();
     $campaign->setName("Quickstart Campaign");
-    $campaign->setStatus(1, 4);
+    $campaign->setStatus([1, 4]);
 
     list($id, $status) = $client->createCouponCampaign($campaign)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the campaignId displayed below for other coupon methods
-    echo "CampaignId" . $campaign->getId() . "\n";
+    echo "CampaignId " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

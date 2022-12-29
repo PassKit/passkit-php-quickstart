@@ -22,7 +22,7 @@ try {
     // Set the program body
     $program = new Members\Program();
     $program->setName("Quickstart Program");
-    $program->setStatus(1, 4);
+    $program->setStatus([1, 4]);
 
     list($id, $status) = $client->createProgram($program)->wait();
     if ($status->code !== 0) {
@@ -30,7 +30,7 @@ try {
     }
 
     //You can use the programId displayed below for other membership methods
-    echo "ProgramId" . $program->getId() . "\n";
+    echo "ProgramId " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

@@ -1,13 +1,10 @@
 <?php
-
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
+$campaignId = "";
 $couponId = "";
 
 // redeem-coupon takes a campaignId of an existing campaign, and couponId of existing coupon to redeem that coupon.
@@ -38,7 +35,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Coupon: " . $id->getId() . " has been redeemed. \n";
 } catch (Exception $e) {
     echo $e;
 }

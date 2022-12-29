@@ -4,7 +4,7 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM AND TIER
-$programId = "programId";
+$programId = "0VN5ScGpcuW3j639qFPNa1";
 // list-members takes search conditions as pagination object and returns list of member records which match with the conditions.
 try {
     $ca_filename = "ca-chain.pem";
@@ -17,7 +17,7 @@ try {
         file_get_contents($path . $key_filename),
         file_get_contents($path . $cert_filename)
     );
- // Generate a members module client
+    // Generate a members module client
     $client = new Members\MembersClient('grpc.pub1.passkit.io:443', [
         'credentials' => $credentials
     ]);
@@ -26,7 +26,7 @@ try {
     $listRequest = new Members\ListRequest();
     $listRequest->setProgramId($programId);
 
-    $call= $client->listMembers($listRequest);
+    $call = $client->listMembers($listRequest);
     $members = $call->responses();
     foreach ($members as $member) {
         echo $member->getId() . "\n";

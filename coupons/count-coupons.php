@@ -1,14 +1,11 @@
 <?php
-
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN AND OFFER
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
-$offerId = "base";
+$campaignId = "";
+$offerId = "";
 // count-coupons takes search conditions as pagination object and returns the number of coupons who match with the condition.
 try {
     $ca_filename = "ca-chain.pem";
@@ -28,19 +25,22 @@ try {
     // Set the coupon list request body
     $listRequest = new Single_use_coupons\ListRequest();
     $listRequest->setCouponCampaignId($campaignId);
-    $filter = new Io\Filter();
+    $filter = new Io\FieldFilter();
     $filter->setFilterField("offerId");
     $filter->setFilterValue($offerId);
     $filter->setFilterOperator("eq");
-    $listRequest->setFilters($filter);
+    $filterGroup = new Io\FilterGroup();
+    $filterGroup->setFieldFilters([$filter]);
+    $filters = new Io\Filters();
+    $filters->setFilterGroups([$filterGroup]);
+    $listRequest->setFilters($filters);
 
 
-    list($id, $status) = $client->countCouponsByCouponCampaign($listRequest)->wait();
+    list($result, $status) = $client->countCouponsByCouponCampaign($listRequest)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
-
-    echo $result->getId() . "/n";
+    echo  "Number of coupons " . $result->getTotal() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

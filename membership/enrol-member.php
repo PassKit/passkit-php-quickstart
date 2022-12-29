@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND EMAIL
-$programId = "05faUsEvatLifOwxKWmS0Q";
-$tierId = "Base Tier";
-$email = "claudia@passkit.com";
+$programId = "";
+$tierId = "";
+$email = "";
 // enrol-member takes programId, tierId and memberDetails, creates a new member record, and sends a welcome email to deliver membership card url.
 // The method returns the member id. Member id is a part of card url.
 try {
@@ -45,8 +45,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the memberId displayed below for other membership methods
-    echo "https://pub1.pskt.io/" . $id->getId() . "\n";
-    echo "MemberId" . $member->getId() . "\n";
+    echo "Pass URL: " . "https://pub1.pskt.io/" . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

@@ -1,12 +1,10 @@
 <?php
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
+$campaignId = "";
 // delete-campaign takes the campaignId to delete an existing campaign.
 try {
     $ca_filename = "ca-chain.pem";
@@ -31,6 +29,7 @@ try {
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
+    echo "Campaign deleted. \n";
 } catch (Exception $e) {
     echo $e;
 }

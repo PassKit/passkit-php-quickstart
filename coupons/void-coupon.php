@@ -1,14 +1,11 @@
 <?php
-
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
-$offerId = "base";
+$campaignId = "";
+$offerId = "";
 $couponId = "";
 // void-coupon takes the couponId, offerId and campaignId to void an existing coupon.
 try {
@@ -37,7 +34,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Coupon has been voided. \n";
 } catch (Exception $e) {
     echo $e;
 }

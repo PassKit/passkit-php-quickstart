@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND MEMBER
-$memberId = "memberId";
-$programId = "programId";
-$tierId = "tierId";
+$memberId = "";
+$programId = "";
+$tierId = "";
 // earn-points takes a programId of an existing program and memberId of existing member to add points to chosen member.
 try {
     $ca_filename = "ca-chain.pem";
@@ -39,7 +39,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Member: " . $result->getId() . " has " . $result->getPoints() . " points. \n";
 } catch (Exception $e) {
     echo $e;
 }

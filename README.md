@@ -31,14 +31,40 @@ Make sure that the file has `extension="grpc.so"` and  add the line if it doesn'
 
 For detailed steps visit the [gRPC PHP quickstart](https://grpc.io/docs/languages/php/quickstart/).
 
-2. In the certs folder of the repository add the following three PassKit credential files:
+2. Add bindings to composer
+To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/passkit/passkit-php-grpc-sdk.git"
+    }
+  ],
+  "require": {
+    "passkit/passkit-php-grpc-sdk": "1.1.70"
+  }
+}
+```
+
+Then run `composer install`
+
+Manual Installation
+Clone the repo and include `autoload.php`:
+
+```php
+require_once('/path/to/passkit-php-grpc-sdk/vendor/autoload.php');
+```
+
+3. In the certs folder of the repository add the following three PassKit credential files:
     - certificate.pem
     - ca-chain.pem
     - key.pem
     
     You can disregard the key-java.pem credentials file as it is not compatible with PHP.
 
-3. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs`  `openssl ec -in key.pem -out key.pem`.
+4. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs`  `openssl ec -in key.pem -out key.pem`.
 ![ScreenShot](images/decrypt-key.png)
 For the password use the one-time password that you used for generating the SDK credentials.
 
@@ -46,10 +72,10 @@ Your `key.pem` file should look like below.
    ![ScreenShot](images/decrypted-key.png)
    If you do not see `Proc-Type: 4,ENCEYPTED` on line 2, you have successfully decrypted `key.pem`.
    
-4. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method.
+5. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method.
 ![ScreenShot](images/variables.png)
 
-5. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons` and for flights `cd flights`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.
+6. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons` and for flights `cd flights`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.
 
 ## Examples
 ###  Membership Cards

@@ -1,13 +1,11 @@
 <?php
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
-$offerId = "base";
+$campaignId = "";
+$offerId = "";
 $couponId = "";
 
 // get-single-coupon takes couponId and returns the record of that coupon.
@@ -35,7 +33,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Coupon Status: " . $id->getStatus() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

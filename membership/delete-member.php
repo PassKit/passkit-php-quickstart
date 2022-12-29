@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND MEMBER
-$memberId = "memberId";
+$memberId = "";
 
-// delete-member takes programId, tierId, memberId and memberDetails, deletes an existing member record.
+// delete-member takes memberId and deletes an existing member record.
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
@@ -31,6 +31,7 @@ try {
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
+    echo "Member deleted. \n";
 } catch (Exception $e) {
     echo $e;
 }

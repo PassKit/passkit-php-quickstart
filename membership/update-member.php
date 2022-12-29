@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND MEMBER
-$memberId = "memberId";
-$programId = "programId";
-$tierId = "tierId";
+$memberId = "4PwOoxn6LAV6wQyM9bEiou";
+$programId = "0VN5ScGpcuW3j639qFPNa1";
+$tierId = "bronze";
 // update-member takes memberId and memberDetails, and updates existing member record.
 try {
     $ca_filename = "ca-chain.pem";
@@ -29,14 +29,14 @@ try {
     $member->setId($memberId);
     $member->setProgramId($programId);
     $member->setTierId($tierId);
-    $member->setPoints(2000);
+    $member->setPoints(2001);
 
     list($result, $status) = $client->updateMember($member)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo $result->getId() . "/n";
+    echo "Updated member " . $result->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

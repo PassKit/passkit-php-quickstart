@@ -1,11 +1,13 @@
 <?php
 
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
+use Google\Protobuf\Timestamp;
+
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // create-offer takes a campaignId of an existing campaign, creates a new template (based of default template), creates an offer, and links this offer to the campaign.
 // The method returns the offer id.
+$campaignId = "";
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
@@ -32,44 +34,45 @@ try {
     $defaultTemplateRequest = new Io\DefaultTemplateRequest();
     $defaultTemplateRequest->setProtocol(101);
     $defaultTemplateRequest->setRevision(1);
-    $defaultPassTemplate = new Io\PassTemplate();
-
-    $defaultPassTemplate->$templatesclient->getDefaultTemplate($defaultTemplateRequest)->wait();
+    list($defaultPassTemplate, $status) = $templatesclient->getDefaultTemplate($defaultTemplateRequest)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
-
     // If you use the default template, you need to set name, description and timezone because these fields are mandatory.
     $defaultPassTemplate->setName("Quickstart");
     $defaultPassTemplate->setDescription("quick start sample template");
     $defaultPassTemplate->setTimezone("America/New_York");
 
 
-    list($id, $status) = $templatesclient->createTemplate($defaultPassTemplate)->wait();
+    list($template, $status) = $templatesclient->createTemplate($defaultPassTemplate)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-
     // Set the offer body
     $offer = new Single_use_coupons\CouponOffer();
     $offer->setId("base");
-    $offer->setBeforeRedeemPassTemplateId($defaultPassTemplate->getId());
+    $offer->setCampaignId($campaignId);
+    $offer->setBeforeRedeemPassTemplateId($template->getId());
     $offer->setOfferTitle("BaseOffer");
     $offer->setOfferShortTitle("BaseOffer");
     $offer->setOfferDetails("Base offer");
-    $startdate = new DateTime();
-    $enddate = new DateTime();
-    $enddate->setDate(2022, 6, 28);
-    $offer->setIssueStartDate($startdate->getTimestamp());
-    $offer->setIssueEndDate($enddate->getTimestamp());
+    $date = new DateTime();
+    $date->setDate(2023, 6, 24);
+    $startdate = new Timestamp();
+    $startdate->setSeconds($date->getTimestamp());
+    $enddate = new Timestamp();
+    $date->setDate(2023, 6, 28);
+    $enddate->setSeconds($date->getTimestamp());
+    $offer->setIssueStartDate($startdate);
+    $offer->setIssueEndDate($enddate);
 
     list($id, $status) = $client->createCouponOffer($offer)->wait();
     if ($status->code !== 0) {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the offerId displayed below for other coupon methods
-    echo "OfferId" . $offer->getId() . "\n";
+    echo "Offer created: " . $offer->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

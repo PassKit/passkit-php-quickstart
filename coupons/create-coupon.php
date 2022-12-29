@@ -1,15 +1,12 @@
 <?php
-
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND EMAIL
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
-$offerId = "base";
-$email = "claudia@passkit.com";
+$campaignId = "";
+$offerId = "";
+$email = "";
 // create-coupon takes campaignId, offerId and couponDetails, creates a new coupon record, and sends a welcome email to deliver coupon card url.
 // The method returns the coupon id. Coupon id is a part of card url.
 
@@ -47,8 +44,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the couponId displayed below for other coupon methods
-    echo "https://pub1.pskt.io/" . $id->getId() . "\n";
-    echo "CouponId" . $coupon->getId() . "\n";
+    echo "Coupon URL: https://pub1.pskt.io/" . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

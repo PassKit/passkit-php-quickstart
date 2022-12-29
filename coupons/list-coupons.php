@@ -1,13 +1,10 @@
 <?php
-
-
-require_once "../vendor/passkit/passkit-php-grpc-sdk/lib/extra/google/api/";
 require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
-$campaignId = "05faUsEvatLifOwxKWmS0Q";
+$campaignId = "";
 
 // list-coupons takes search conditions as pagination object and returns list of coupon records which match with the conditions.
 try {
@@ -35,7 +32,7 @@ try {
         echo $coupon->getId() . "\n";
     }
 
-    echo $result->getId() . "/n";
+    echo "/n";
 } catch (Exception $e) {
     echo $e;
 }

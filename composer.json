@@ -1,0 +1,49 @@
+{
+    "name": "passkit/passkit-php-quickstart",
+    "description": "PHP gRPC SDK for Apple Wallet and Google Pay Membership / Loyalty / Access Cards, Coupons, Flights & Event-Tickets.",
+    "keywords": [
+        "passkit",
+        "php",
+        "sdk",
+        "api",
+        "grpc"
+    ],
+    "version": "1.0.0",
+    "homepage": "http://passkit.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PassKit Inc.",
+            "homepage": "https://passkit.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/passkit/passkit-php-grpc-sdk.git"
+        }
+    ],
+    "require": {
+        "grpc/grpc": "^v1.42.0",
+        "google/protobuf": "^v3.21.7",
+        "passkit/passkit-php-grpc-sdk": "1.1.72"
+    },
+    "autoload": {
+        "psr-4": {
+            "Analytics\\": "lib/Analytics",
+            "Cabin_codes\\": "lib/Cabin_codes",
+            "Ct\\": "lib/Ct",
+            "Event_tickets\\": "lib/Event_tickets",
+            "Flights\\": "lib/Flights",
+            "Io\\": "lib/Io",
+            "Members\\": "lib/Members",
+            "Raw\\": "lib/Raw",
+            "Scheduler\\": "lib/Scheduler",
+            "Single_use_coupons\\": "lib/Single_use_coupons",
+            "GPBMetadata\\Io\\": "lib/GPBMetadata/Io",
+            "GPBMetadata\\Ct\\": "lib/GPBMetadata/Ct",
+            "GPBMetadata\\Google\\": "lib/extra/GPBMetadata/Google",
+            "Google\\Api\\": "lib/extra/google/api"
+        }
+    }
+}

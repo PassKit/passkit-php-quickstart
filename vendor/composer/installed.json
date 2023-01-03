@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "google/protobuf",
-            "version": "v3.21.11",
-            "version_normalized": "3.21.11.0",
+            "version": "v3.21.12",
+            "version_normalized": "3.21.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85"
+                "reference": "93019df2df0f8c5c01757ef79f3f077d2cb35b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/8f8dc48540aed2c96eb3febcc4816f1321f66b85",
-                "reference": "8f8dc48540aed2c96eb3febcc4816f1321f66b85",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/93019df2df0f8c5c01757ef79f3f077d2cb35b65",
+                "reference": "93019df2df0f8c5c01757ef79f3f077d2cb35b65",
                 "shasum": ""
             },
             "require": {
@@ -24,7 +24,7 @@
             "suggest": {
                 "ext-bcmath": "Need to support JSON deserialization"
             },
-            "time": "2022-12-08T06:36:59+00:00",
+            "time": "2022-12-14T14:50:49+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -43,7 +43,7 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.11"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.12"
             },
             "install-path": "../google/protobuf"
         },
@@ -96,18 +96,18 @@
         },
         {
             "name": "passkit/passkit-php-grpc-sdk",
-            "version": "v1.1.70",
-            "version_normalized": "1.1.70.0",
+            "version": "v1.1.72",
+            "version_normalized": "1.1.72.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/passkit/passkit-php-grpc-sdk.git",
-                "reference": "aa4501206dbf2f80131c492892c5de8626a79039"
+                "reference": "ebce339d47a6af89beeaa1c0e901d6a5681e9e70"
             },
             "require": {
-                "google/protobuf": "^v3.21.7",
+                "google/protobuf": "^v3.21.12",
                 "grpc/grpc": "^v1.42.0"
             },
-            "time": "2022-10-06T08:27:41+00:00",
+            "time": "2022-12-30T11:06:45+00:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {

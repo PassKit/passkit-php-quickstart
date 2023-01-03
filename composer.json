@@ -26,7 +26,7 @@
     "require": {
         "grpc/grpc": "^v1.42.0",
         "google/protobuf": "^v3.21.7",
-        "passkit/passkit-php-grpc-sdk": "1.1.70"
+        "passkit/passkit-php-grpc-sdk": "1.1.72"
     },
     "autoload": {
         "psr-4": {

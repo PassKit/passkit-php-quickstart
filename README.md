@@ -1,6 +1,8 @@
 PassKit PHP Quickstart
 =======================
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/PassKit/passkit-php-grpc-sdk/main/LICENSE)
+
+[![Latest Stable Version](https://poser.pugx.org/passkit/passkit-php-grpc-sdk/v)](https://packagist.org/packages/passkit/passkit-php-grpc-sdk)
 ### Overview
 
 This quickstart aims to help  get PHP developers up and running with the PassKit SDK as quickly as possible.

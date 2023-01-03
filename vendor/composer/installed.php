@@ -11,12 +11,12 @@
     ),
     'versions' => array(
         'google/protobuf' => array(
-            'pretty_version' => 'v3.21.11',
-            'version' => '3.21.11.0',
+            'pretty_version' => 'v3.21.12',
+            'version' => '3.21.12.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../google/protobuf',
             'aliases' => array(),
-            'reference' => '8f8dc48540aed2c96eb3febcc4816f1321f66b85',
+            'reference' => '93019df2df0f8c5c01757ef79f3f077d2cb35b65',
             'dev_requirement' => false,
         ),
         'grpc/grpc' => array(
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'passkit/passkit-php-grpc-sdk' => array(
-            'pretty_version' => 'v1.1.70',
-            'version' => '1.1.70.0',
+            'pretty_version' => 'v1.1.72',
+            'version' => '1.1.72.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../passkit/passkit-php-grpc-sdk',
             'aliases' => array(),
-            'reference' => 'aa4501206dbf2f80131c492892c5de8626a79039',
+            'reference' => 'ebce339d47a6af89beeaa1c0e901d6a5681e9e70',
             'dev_requirement' => false,
         ),
         'passkit/passkit-php-quickstart' => array(

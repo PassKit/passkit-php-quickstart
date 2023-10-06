@@ -76,7 +76,7 @@ Your `key.pem` file should look like below.
 5. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method.
 ![ScreenShot](images/variables.png)
 
-6. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons` and for flights `cd flights`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.
+6. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons`, for flights `cd flights`, for event tickets `cd event-tickets`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.
 
 ## Examples
 ###  Membership Cards
@@ -110,7 +110,6 @@ In the coupons folder the methods are:
 
 
 ### Boarding Passes
-#### Issue A Boarding Pass.
 Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
 In the flights folder the methods are:
 - create-template.php - creates the pass template for flights and boarding passes
@@ -124,10 +123,23 @@ In the flights folder the methods are:
 - delete-airports.php - takes an existing airport code and deletes the airport associated with it
 - delete-carrier.php - takes an existing carrier code and deletes the carrier associated with it
 
+### Event Tickets
+Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
+In the event tickets folder the methods are:
+- createTemplate() - creates the pass template for event tickets
+- createVenue() - creates a venue for the event 
+- createProduction() - takes a new production name and creates a new production
+- createTicketType() - takes templateId , from previous method, to use as base template and the productionId, created from previous method, and creates a new ticketType 
+- createEvent() - takes productionId and venueId ,from previous method, and creates a new Event
+- issueEventTicket() - takes ticketTypeId and  eventId, from previous method, and customer details creates a event ticket, and sends a welcome email to deliver event ticket url
+- validateTicket() - takes an existing ticket number as well as other details and validates it
+- redeemTicket() - takes an existing ticket number and redeems the event ticket associate with it
+
 ## Documentation
 * [PassKit Membership Official Documentation](https://docs.passkit.io/protocols/member)
 * [PassKit Coupons Official Documentation](https://docs.passkit.io/protocols/coupon)
 * [PassKit Boarding Passes Official Documentation](https://docs.passkit.io/protocols/boarding)
+* [PassKit Event Tickets Official Documentation](https://docs.passkit.io/protocols/event-tickets/)
 
 
 ## Getting Help

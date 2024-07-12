@@ -35,7 +35,7 @@ try {
     }
 
     //You can use the venueId displayed below for other event ticket methods
-    echo "VenueId: " . $venue->getId() . "\n";
+    echo "VenueId: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

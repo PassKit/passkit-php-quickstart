@@ -72,7 +72,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the offerId displayed below for other coupon methods
-    echo "Offer created: " . $offer->getId() . "\n";
+    echo "Offer created: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

@@ -66,7 +66,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
     //You can use the tierId displayed below for other membership methods
-    echo "Tier created: " . $tier->getId() . "\n";
+    echo "Tier created: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

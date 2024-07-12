@@ -37,7 +37,7 @@ try {
     }
 
     //You can use the ticket type Id displayed below for other event ticket methods
-    echo "TicketTypeId: " . $ticketType->getId() . "\n";
+    echo "TicketTypeId: " . $credentials->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

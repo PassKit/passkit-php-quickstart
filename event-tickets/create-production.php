@@ -36,7 +36,7 @@ try {
     }
 
     //You can use the productionId displayed below for other event ticket methods
-    echo "ProductionId: " . $production->getId() . "\n";
+    echo "ProductionId: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

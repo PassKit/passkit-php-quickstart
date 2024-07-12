@@ -45,7 +45,7 @@ try {
     }
 
     //You can use the templateId displayed below for other flight methods
-    echo "TemplateId: " . $defaultPassTemplate->getId() . "\n";
+    echo "TemplateId: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

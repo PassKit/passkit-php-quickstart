@@ -59,7 +59,7 @@ try {
     }
 
     //You can use the eventId displayed below for other event ticket methods
-    echo "EventId: " . $event->getId() . "\n";
+    echo "EventId: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

@@ -126,14 +126,14 @@ In the flights folder the methods are:
 ### Event Tickets
 Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
 In the event tickets folder the methods are:
-- createTemplate() - creates the pass template for event tickets
-- createVenue() - creates a venue for the event 
-- createProduction() - takes a new production name and creates a new production
-- createTicketType() - takes templateId , from previous method, to use as base template and the productionId, created from previous method, and creates a new ticketType 
-- createEvent() - takes productionId and venueId ,from previous method, and creates a new Event
-- issueEventTicket() - takes ticketTypeId and  eventId, from previous method, and customer details creates a event ticket, and sends a welcome email to deliver event ticket url
-- validateTicket() - takes an existing ticket number as well as other details and validates it
-- redeemTicket() - takes an existing ticket number and redeems the event ticket associate with it
+- create-template.php - creates the pass template for event tickets
+- create-venue.php - creates a venue for the event 
+- create-production.php - takes a new production name and creates a new production
+- create-ticket-type.php - takes templateId , from previous method, to use as base template and the productionId, created from previous method, and creates a new ticketType 
+- create-event.php - takes productionId and venueId ,from previous method, and creates a new Event
+- issue-event-ticket.php - takes ticketTypeId and  eventId, from previous method, and customer details creates a event ticket, and sends a welcome email to deliver event ticket url
+- validate-ticket.php - takes an existing ticket number as well as other details and validates it
+- redeem-ticket.php - takes an existing ticket number and redeems the event ticket associate with it
 
 ## Documentation
 * [PassKit Membership Official Documentation](https://docs.passkit.io/protocols/member)

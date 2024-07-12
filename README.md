@@ -73,7 +73,7 @@ Your `key.pem` file should look like below.
    ![ScreenShot](images/decrypted-key.png)
    If you do not see `Proc-Type: 4,ENCEYPTED` on line 2, you have successfully decrypted `key.pem`.
    
-5. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method.
+5. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method. Make sure to check the API region of your account [here](https://app.passkit.com/app/account/developer-tools) and change it accordingly when creating the client for each method, for Europe/Pub1 use `"grpc.pub1.passkit.io"` and for USA/Pub2 use `"grpc.pub2.passkit.io"`.
 ![ScreenShot](images/variables.png)
 
 6. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons`, for flights `cd flights`, for event tickets `cd event-tickets`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.

@@ -8,7 +8,7 @@
         "api",
         "grpc"
     ],
-    "version": "1.0.0",
+    "version": "1.1.124",
     "homepage": "http://passkit.com",
     "license": "MIT",
     "authors": [
@@ -24,9 +24,9 @@
         }
     ],
     "require": {
-        "grpc/grpc": "^v1.42.0",
-        "google/protobuf": "^v3.21.7",
-        "passkit/passkit-php-grpc-sdk": "1.1.72"
+        "grpc/grpc": "^v1.57.0",
+        "google/protobuf": "^v4.29.3",
+        "passkit/passkit-php-grpc-sdk": "1.1.124"
     },
     "autoload": {
         "psr-4": {
@@ -43,7 +43,9 @@
             "GPBMetadata\\Io\\": "lib/GPBMetadata/Io",
             "GPBMetadata\\Ct\\": "lib/GPBMetadata/Ct",
             "GPBMetadata\\Google\\": "lib/extra/GPBMetadata/Google",
-            "Google\\Api\\": "lib/extra/google/api"
+            "Google\\Api\\": "lib/extra/google/api",
+            "GPBMetadata\\ProtocGenOpenapiv2\\": "lib/extra/GPBMetadata/ProtocGenOpenapiv2",
+            "Protoc_gen_openapiv2\\Options\\": "lib/extra/Grpc/Gateway/Protoc_gen_openapiv2/Options"
         }
     }
 }

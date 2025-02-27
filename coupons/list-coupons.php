@@ -3,6 +3,7 @@ require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
+
 // MODIFY WITH THE VARIABLES OF YOUR CAMPAIGN, OFFER AND COUPON
 $campaignId = "";
 

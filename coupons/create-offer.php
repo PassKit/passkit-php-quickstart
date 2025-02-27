@@ -58,11 +58,11 @@ try {
     $offer->setOfferShortTitle("BaseOffer");
     $offer->setOfferDetails("Base offer");
     $date = new DateTime();
-    $date->setDate(2023, 6, 24);
+    $date->setDate(2025, 2, 24);
     $startdate = new Timestamp();
     $startdate->setSeconds($date->getTimestamp());
     $enddate = new Timestamp();
-    $date->setDate(2023, 6, 28);
+    $date->setDate(2025, 6, 28);
     $enddate->setSeconds($date->getTimestamp());
     $offer->setIssueStartDate($startdate);
     $offer->setIssueEndDate($enddate);

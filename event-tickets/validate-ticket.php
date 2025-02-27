@@ -3,6 +3,7 @@
 use Event_tickets\TicketId;
 use Event_tickets\ValidateDetails;
 use Event_tickets\ValidateTicketRequest;
+use Google\Protobuf\Timestamp;
 
 require_once "../vendor/autoload.php";
 
@@ -27,13 +28,17 @@ try {
     ]);
 
     $validateDate = new DateTime("now");
-    $validateDate = $endDate->getTimestamp();
+    $validateDate->setDate(2025, 2, 28);
+    $validateDate->setTime(13, 0, 0);
+
+    $validateTimestamp = new Timestamp();
+    $validateTimestamp->setSeconds($validateDate->getTimestamp());
 
     $ticketId = new TicketId();
-    $ticketId->setTicketId("Your ticket Id");
+    $ticketId->setTicketId("");
 
     $validateDetails = new ValidateDetails();
-    $validateDetails->setValidateDate($validateDate);
+    $validateDetails->setValidateDate($validateTimestamp);
 
     // Set up ticket to validate
     $ticket = new ValidateTicketRequest();

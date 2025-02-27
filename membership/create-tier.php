@@ -7,7 +7,7 @@ require_once "../vendor/autoload.php";
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM 
-$programId = "";
+$programId = "4HTH9hdCcfGrXjuI44POyU";
 // create-tier takes a programId of an existing program, creates a new template (based of default template), creates a tier, and links this tier to the program.
 // The method returns the tier id.
 try {

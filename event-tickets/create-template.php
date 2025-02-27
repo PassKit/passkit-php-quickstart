@@ -1,9 +1,8 @@
 <?php
 require_once "../vendor/autoload.php";
 
-
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
-// create-template creates the pass template for flights and boarding passes.
+
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
@@ -16,36 +15,39 @@ try {
         file_get_contents($path . $cert_filename)
     );
 
-    //Create templates client
-    $templatesclient = new Io\TemplatesClient('grpc.pub1.passkit.io:443', [
+    // Create templates client
+    $templatesClient = new Io\TemplatesClient('grpc.pub1.passkit.io:443', [
         'credentials' => $credentials
     ]);
 
-    // Create the template for the card
-    // In order to create a ticket type, we need a pass template id which holds pass design data. Let's use the default pass template for now.
+    // Create the request for the default template
     $defaultTemplateRequest = new Io\DefaultTemplateRequest();
     $defaultTemplateRequest->setProtocol(102);
     $defaultTemplateRequest->setRevision(1);
-    $defaultPassTemplate = new Io\PassTemplate();
 
-    $defaultPassTemplate->$templatesclient->getDefaultTemplate($defaultTemplateRequest)->wait();
-    if ($status->code !== 0) {
-        throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
+    // Call getDefaultTemplate and capture the response and status
+    list($defaultPassTemplate, $status) = $templatesClient->getDefaultTemplate($defaultTemplateRequest)->wait();
+
+    // Check for errors
+    if ($status->code !== Grpc\STATUS_OK) {
+        throw new Exception(sprintf('Status Code: %s, Details: %s', $status->code, $status->details));
     }
 
-    // If you use the default template, you need to set name, description and timezone because these fields are mandatory.
+    // Modify the template fields
     $defaultPassTemplate->setName("Quickstart Event Ticket");
-    $defaultPassTemplate->setDescription("quick start event ticket");
+    $defaultPassTemplate->setDescription("Quick start event ticket");
     $defaultPassTemplate->setTimezone("Europe/London");
 
+    // Call createTemplate and capture response and status
+    list($templateResponse, $status) = $templatesClient->createTemplate($defaultPassTemplate)->wait();
 
-    list($id, $status) = $templatesclient->createTemplate($defaultPassTemplate)->wait();
-    if ($status->code !== 0) {
-        throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
+    // Check for errors
+    if ($status->code !== Grpc\STATUS_OK) {
+        throw new Exception(sprintf('Status Code: %s, Details: %s', $status->code, $status->details));
     }
 
-    //You can use the templateId displayed below for other event ticket methods
-    echo "TemplateId: " . $id->getId() . "\n";
+    // Print the template ID
+    echo "TemplateId: " . $templateResponse->getId() . "\n";
 } catch (Exception $e) {
-    echo $e;
+    echo "Error: " . $e->getMessage() . "\n";
 }

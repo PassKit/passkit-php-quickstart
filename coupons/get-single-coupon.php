@@ -33,7 +33,7 @@ try {
         throw new Exception(sprintf('Status Code: %s, Details: %s, Meta: %s', $status->code, $status->details, var_dump($status->metadata)));
     }
 
-    echo "Coupon Status: " . $id->getStatus() . "\n";
+    echo "Coupon Id: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

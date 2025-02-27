@@ -27,8 +27,8 @@ try {
     // Create the ticket type for the event ticket
     $ticketType = new TicketType();
     $ticketType->setName("Quickstart Ticket Type");
-    $ticketType->setProductionId(" Your productionId ");
-    $ticketType->setBeforeRedeemPassTemplateId("Your templateId");
+    $ticketType->setProductionId("");
+    $ticketType->setBeforeRedeemPassTemplateId("");
     $ticketType->setUid("");
 
     list($id, $status) = $eventsclient->createTicketType($ticketType)->wait();
@@ -37,7 +37,7 @@ try {
     }
 
     //You can use the ticket type Id displayed below for other event ticket methods
-    echo "TicketTypeId: " . $credentials->getId() . "\n";
+    echo "TicketTypeId: " . $id->getId() . "\n";
 } catch (Exception $e) {
     echo $e;
 }

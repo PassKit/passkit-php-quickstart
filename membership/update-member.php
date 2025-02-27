@@ -4,9 +4,9 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND MEMBER
-$memberId = "4PwOoxn6LAV6wQyM9bEiou";
-$programId = "0VN5ScGpcuW3j639qFPNa1";
-$tierId = "bronze";
+$memberId = "";
+$programId = "";
+$tierId = "";
 // update-member takes memberId and memberDetails, and updates existing member record.
 try {
     $ca_filename = "ca-chain.pem";

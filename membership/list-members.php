@@ -4,7 +4,7 @@ require_once "../vendor/autoload.php";
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM AND TIER
-$programId = "0VN5ScGpcuW3j639qFPNa1";
+$programId = "";
 // list-members takes search conditions as pagination object and returns list of member records which match with the conditions.
 try {
     $ca_filename = "ca-chain.pem";

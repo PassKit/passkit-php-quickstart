@@ -3,8 +3,7 @@
 use Event_tickets\RedeemTicketRequest;
 use Event_tickets\RedemptionDetails;
 use Event_tickets\TicketId;
-use Event_tickets\ValidateDetails;
-use Event_tickets\ValidateTicketRequest;
+use Google\Protobuf\Timestamp;
 
 require_once "../vendor/autoload.php";
 
@@ -29,13 +28,17 @@ try {
     ]);
 
     $redeemDate = new DateTime("now");
-    $redeemDate = $endDate->getTimestamp();
+    $redeemDate->setDate(2025, 2, 28);
+    $redeemDate->setTime(13, 0, 0);
+
+    $redeemTimestamp = new Timestamp();
+    $redeemTimestamp->setSeconds($redeemDate->getTimestamp());
 
     $ticketId = new TicketId();
-    $ticketId->setTicketId("Your ticket Id");
+    $ticketId->setTicketId("");
 
     $redeemDetails = new RedemptionDetails();
-    $redeemDetails->setRedemptionDate($redeemDate);
+    $redeemDetails->setRedemptionDate($redeemTimestamp);
 
     // Set up ticket to redeem
     $ticket = new RedeemTicketRequest();

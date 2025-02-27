@@ -1,6 +1,7 @@
 <?php
 
 use Event_tickets\IssueTicketRequest;
+use Google\Protobuf\Timestamp;
 
 require_once "../vendor/autoload.php";
 
@@ -25,9 +26,12 @@ try {
     ]);
 
     $endDate = new DateTime();
-    $endDate->setDate(2023, 12, 13);
+    $endDate->setDate(2025, 2, 28);
     $endDate->setTime(13, 0, 0);
-    $endDate = $endDate->getTimestamp();
+
+    $expiryTimestamp = new Timestamp();
+    $expiryTimestamp->setSeconds($endDate->getTimestamp());
+
 
     $person = new Io\Person();
     $person->setDisplayName("Loyal Larry");
@@ -37,9 +41,9 @@ try {
 
     // Create the ticket to issue
     $ticket = new IssueTicketRequest();
-    $ticket->setTicketTypeId("Your ticketTypeId");
-    $ticket->setEventId(" Your eventId ");
-    $ticket->setExpiryDate($endDate);
+    $ticket->setTicketTypeId("");
+    $ticket->setEventId("");
+    $ticket->setExpiryDate($expiryTimestamp);
     $ticket->setOrderNumber("1");
     $ticket->setTicketNumber("1");
     $ticket->setPerson($person);

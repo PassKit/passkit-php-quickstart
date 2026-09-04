@@ -5,7 +5,8 @@ use Event_tickets\Production;
 use Event_tickets\Venue;
 use Google\Protobuf\Timestamp;
 
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
@@ -13,7 +14,7 @@ try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -22,7 +23,7 @@ try {
     );
 
     // Create events client
-    $eventsclient = new Event_tickets\EventTicketsClient('grpc.pub1.passkit.io:443', [
+    $eventsclient = new Event_tickets\EventTicketsClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 
@@ -32,21 +33,18 @@ try {
     $venue = new Venue();
     $venue->setId("");
 
-    // Function to convert a DateTime object to a Google\Protobuf\Timestamp
-    function createTimestamp($year, $month, $day, $hour, $minute, $second)
+    // Keep sample events valid whenever this example is run.
+    function createTimestamp(DateTimeInterface $date)
     {
-        $datetime = new DateTime();
-        $datetime->setDate($year, $month, $day);
-        $datetime->setTime($hour, $minute, $second);
         $timestamp = new Timestamp();
-        $timestamp->setSeconds($datetime->getTimestamp());
+        $timestamp->setSeconds($date->getTimestamp());
         return $timestamp;
     }
 
-    // Create timestamps for event dates
-    $startDate = createTimestamp(2025, 2, 12, 13, 0, 0);
-    $endDate = createTimestamp(2025, 2, 28, 13, 0, 0);
-    $doorsOpen = createTimestamp(2025, 2, 12, 14, 0, 0);
+    $start = new DateTimeImmutable('+7 days 19:00:00');
+    $startDate = createTimestamp($start);
+    $endDate = createTimestamp($start->modify('+3 hours'));
+    $doorsOpen = createTimestamp($start->modify('-1 hour'));
 
     // Create the event for the event ticket
     $event = new Event();

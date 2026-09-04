@@ -1,5 +1,6 @@
 <?php
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // create-campaign takes a new campaign name and creates a new campaign. The method returns the campaign id.
@@ -8,7 +9,7 @@ try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -16,7 +17,7 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate PassKit Client object for Coupon protocol.
-    $client = new  Single_use_coupons\SingleUseCouponsClient('grpc.pub1.passkit.io:443', [
+    $client = new  Single_use_coupons\SingleUseCouponsClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
     // Set the campaign body

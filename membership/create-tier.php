@@ -2,19 +2,20 @@
 
 use Io\PassTemplate;
 
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM 
-$programId = "4HTH9hdCcfGrXjuI44POyU";
+$programId = "";
 // create-tier takes a programId of an existing program, creates a new template (based of default template), creates a tier, and links this tier to the program.
 // The method returns the tier id.
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -22,12 +23,12 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate a members module client
-    $client = new Members\MembersClient('grpc.pub1.passkit.io:443', [
+    $client = new Members\MembersClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 
     //Create templates client
-    $templatesclient = new Io\TemplatesClient('grpc.pub1.passkit.io:443', [
+    $templatesclient = new Io\TemplatesClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 

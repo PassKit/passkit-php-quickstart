@@ -1,3 +1,11 @@
+.env
+.env.*
+!.env.example
 *.pem
 vendor/
-composer.lock
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+.DS_Store
+.idea/
+.vscode/

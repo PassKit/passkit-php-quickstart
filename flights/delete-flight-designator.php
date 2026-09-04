@@ -1,16 +1,17 @@
 <?php
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // MODIFY WITH THE VARIABLES NEEDED FOR FLIGHTS 
-$carrierCode = "";
+$carrierCode = "YY";
 // delete-flight-designator takes an existing flight designation and deletes the flight designator associated with it.
 //If the flight designator doesn't exist it cannot be deleted.
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -18,7 +19,7 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate a flight module client
-    $client = new Flights\FlightsClient('grpc.pub1.passkit.io:443', [
+    $client = new Flights\FlightsClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 
@@ -26,7 +27,7 @@ try {
     $flightDesignator = new Flights\FlightDesignatorRequest();
     $flightDesignator->setCarrierCode($carrierCode);
     $flightDesignator->setFlightNumber("12345");
-    $flightDesignator->setRevision(0);
+    $flightDesignator->setRevision(1);
 
     list($id, $status) = $client->deleteFlightDesignator($flightDesignator)->wait();
     if ($status->code !== 0) {

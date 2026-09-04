@@ -2,7 +2,8 @@
 
 use Google\Protobuf\Timestamp;
 
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // create-offer takes a campaignId of an existing campaign, creates a new template (based of default template), creates an offer, and links this offer to the campaign.
@@ -12,7 +13,7 @@ try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -20,12 +21,12 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate a template module client
-    $client = new  Single_use_coupons\SingleUseCouponsClient('grpc.pub1.passkit.io:443', [
+    $client = new  Single_use_coupons\SingleUseCouponsClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 
     //Create templates client
-    $templatesclient = new Io\TemplatesClient('grpc.pub1.passkit.io:443', [
+    $templatesclient = new Io\TemplatesClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 
@@ -57,13 +58,11 @@ try {
     $offer->setOfferTitle("BaseOffer");
     $offer->setOfferShortTitle("BaseOffer");
     $offer->setOfferDetails("Base offer");
-    $date = new DateTime();
-    $date->setDate(2025, 2, 24);
+    $date = new DateTimeImmutable('now');
     $startdate = new Timestamp();
     $startdate->setSeconds($date->getTimestamp());
     $enddate = new Timestamp();
-    $date->setDate(2025, 6, 28);
-    $enddate->setSeconds($date->getTimestamp());
+    $enddate->setSeconds($date->modify('+30 days')->getTimestamp());
     $offer->setIssueStartDate($startdate);
     $offer->setIssueEndDate($enddate);
 

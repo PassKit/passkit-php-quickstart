@@ -1,16 +1,17 @@
 <?php
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 // MODIFY WITH THE VARIABLES NEEDED FOR FLIGHTS 
-$appleCertificate = ""; // change to your apple certificate
+$appleCertificate = getenv("PASSKIT_APPLE_CERTIFICATE") ?: "";
 // create-carrier takes a new carrier code and creates a new carrier.
 // If the carrier already exists it cannot be created.
 try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -18,7 +19,7 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate a flight module client
-    $client = new Flights\FlightsClient('grpc.pub1.passkit.io:443', [
+    $client = new Flights\FlightsClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 

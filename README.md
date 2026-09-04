@@ -1,146 +1,163 @@
-PassKit PHP Quickstart
-=======================
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/PassKit/passkit-php-grpc-sdk/main/LICENSE)
-[![Latest Stable Version](https://poser.pugx.org/passkit/passkit-php-grpc-sdk/v)](https://packagist.org/packages/passkit/passkit-php-grpc-sdk)
-### Overview
+# PassKit PHP Quickstart
 
-This quickstart aims to help  get PHP developers up and running with the PassKit SDK as quickly as possible.
+[![CI](https://github.com/PassKit/passkit-php-quickstart/actions/workflows/ci.yml/badge.svg)](https://github.com/PassKit/passkit-php-quickstart/actions/workflows/ci.yml)
+[![SDK](https://img.shields.io/badge/PassKit%20SDK-1.1.162-blue)](https://github.com/PassKit/passkit-php-grpc-sdk/tree/v1.1.162)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-### Prerequisites
+Use the official PHP SDK to create and manage membership cards, loyalty passes, coupons, event tickets, and flight boarding passes for Apple Wallet and Google Wallet.
 
-You will need the following:
-- PHP 7.0 or higher [Installation Guide](https://grpc.io/docs/languages/php/quickstart/)
-- PEAR [Installation Guide](https://pear.php.net/manual/en/installation.php) 
-- PECL [Mac Installation Guide](https://blackdeerdev.com/install-pecl-pear-on-mac-osx/),  [Windows Installation Guide](https://wiki.php.net/internals/windows/stepbystepbuild#building_pecl_extensions)
-- Composer [Download Here](https://getcomposer.org/) ([Installation Guide](https://getcomposer.org/download/) )
-- A PassKit account (signup for free at [PassKit](https://app.passkit.com))
-- Your PassKit SDK Credentials (available from the [Developer Tools Page](https://app.passkit.com/app/account/developer-tools))
-- Apple wallet certificate id (for flights only, available from the [certificate page](https://app.passkit.com/app/account/certificates))
- ![ScreenShot](images/certificate.png)
+## Quick start
 
+You need PHP 8.1 or later, Composer, the PHP gRPC extension, a PassKit account, and PassKit SDK credentials.
 
-### Configuration
+### 1. Install PHP and gRPC
 
-1.  Install & Enable the gRPC PHP extension
-![ScreenShot](images/pecl.png)
+Check your setup:
 
-After installing the gRPC extension, make sure the extension is enabled in your `php.ini` file by typing `php --ini`
-![ScreenShot](images/ini.png)
+    php --version
+    composer --version
+    php -m | grep grpc
 
-Make sure that the file has `extension="grpc.so"` and  add the line if it doesn't so it matches the screenshot below:
-![ScreenShot](images/grpc.png)
+If grpc is not listed, install and enable the extension:
 
-For detailed steps visit the [gRPC PHP quickstart](https://grpc.io/docs/languages/php/quickstart/).
+    pecl install grpc
 
-2. Add bindings to composer
-To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
+Add extension=grpc to the active php.ini shown by php --ini, then restart your terminal. See the [official gRPC PHP setup guide](https://grpc.io/docs/languages/php/quickstart/) for platform-specific help.
 
-```json
-{
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/passkit/passkit-php-grpc-sdk.git"
-    }
-  ],
-  "require": {
-    "passkit/passkit-php-grpc-sdk": "1.1.70"
-  }
-}
-```
+### 2. Download and install
 
-Then run `composer install`
+    git clone https://github.com/PassKit/passkit-php-quickstart.git
+    cd passkit-php-quickstart
+    composer install
 
-Manual Installation
-Clone the repo and include `autoload.php`:
+You can also download the repository as a ZIP, extract it, and open a terminal in that folder.
 
-```php
-require_once('/path/to/passkit-php-grpc-sdk/vendor/autoload.php');
-```
+### 3. Add PassKit credentials
 
-3. In the certs folder of the repository add the following three PassKit credential files:
-    - certificate.pem
-    - ca-chain.pem
-    - key.pem
-    
-    You can disregard the key-java.pem credentials file as it is not compatible with PHP.
+In PassKit, open Developer Tools, generate SDK Credentials, and download:
 
-4. Now we need to decrypt your `key.pem`. At your project root directory, run `cd ./certs`  `openssl ec -in key.pem -out key.pem`.
-![ScreenShot](images/decrypt-key.png)
-For the password use the one-time password that you used for generating the SDK credentials.
+- certificate.pem
+- key.pem
+- ca-chain.pem
 
-Your `key.pem` file should look like below.
-   ![ScreenShot](images/decrypted-key.png)
-   If you do not see `Proc-Type: 4,ENCEYPTED` on line 2, you have successfully decrypted `key.pem`.
-   
-5. Modify the variables with the values for your programs or campaigns in each of the membership, coupons and flights methods. The variables to  modify will be at the top of each method. Make sure to check the API region of your account [here](https://app.passkit.com/app/account/developer-tools) and change it accordingly when creating the client for each method, for Europe/Pub1 use `"grpc.pub1.passkit.io"` and for USA/Pub2 use `"grpc.pub2.passkit.io"`.
-![ScreenShot](images/variables.png)
+Copy the files into certs and create your local environment file:
 
-6. To run each method go into the directory, for  members `cd membership`, for coupons `cd coupons`, for flights `cd flights`, for event tickets `cd event-tickets`. Then run php plus the name of the method e.g. `php enrol-member.php` to run that method.
+    cp .env.example .env
 
-## Examples
-###  Membership Cards
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
-In the membership folder the methods there are:
-- create-program.php - takes a new program name and creates a new program
-- create-tier.php -  takes the programId of the program just created in the above program, creates a new template (based of default template), creates a tier, and links this tier to the program
-- enrol-member.php - takes programId and tierId created by the above methods, and memberDetails, creates a new member record, and sends a welcome email to deliver membership card url
-    - GetSingleMember() - takes memberId and returns the record of that member
-- list-members.php - takes search conditions as pagination object and returns list of member records which match with the conditions
-- update-member.php - takes memberId and memberDetails, and updates existing member record
-- earn-points.php - takes a programId of an existing program and memberId of existing member to add points to chosen member
-- burn-points.php - takes a programId of an existing program and memberId of existing member to use points from a chosen member
-- set-points.php - takes a programId of an existing program and memberId of existing member to set the points of a chosen member
-- delete-member.php - takes programId, tierId, memberId and memberDetails, deletes an existing member record
+The credential PEM files and .env are ignored by Git. Never commit or share them.
 
+If key.pem is encrypted, decrypt a copy using the one-time password chosen when the credentials were generated:
 
-###  Coupons
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
-In the coupons folder the methods are:
-- create-campaign.php - takes a new campaign name and creates a new campaign
-- create-offer.php - takes a campaignId of the campaign you just created and creates a new template (based of default template), creates an offer, and links this offer to the campaign
-- create-coupon.php - takes campaignId and offerId created by the above methods, and couponDetails, creates a new coupon record, and sends a welcome email to deliver coupon card url
-- get-single-coupon.php - takes couponId and returns the record of that coupon
-- list-coupons.php - takes search conditions as pagination object and returns list of coupon records which match with the conditions
-- count-coupons.php - takes search conditions as pagination object and returns the number of coupons who match with the condition
-- update-coupon.php - takes a campaignId of an existing campaign and couponId of existing coupon to update that coupon
-- redeem-coupon.php - takes a campaignId of an existing campaign and couponId of existing coupon to redeem that coupon
-- void-coupon.php - takes the couponId, offerId and campaignId to void an existing coupon
-- delete-campaign.php - takes the campaignId to delete an existing campaign
+    openssl ec -in certs/key.pem -out certs/key-decrypted.pem
 
+Then set PASSKIT_PRIVATE_KEY=./certs/key-decrypted.pem in .env. Do not overwrite your only encrypted copy.
 
-### Boarding Passes
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
-In the flights folder the methods are:
-- create-template.php - creates the pass template for flights and boarding passes
-- create-carrier.php - takes a new carrier code and creates a new carrier
-- create-airport.php - takes a new airport code and creates a new airport.
-- create-flight.php - takes templateId , from previous method, to use as base template and uses a carrier code, created from previous method, and creates a new flight
-- create-flight-designator.php - creates flight designator using flight code
-- create-boarding-pass.php - takes templateId, from previous method, and customer details creates a new boarding pass, and sends a welcome email to deliver boarding pass url
-- delete-flight.php - takes an existing flight number as well as other details and deletes the flight associated with it
-- delete-flight-designator.php - takes an existing flight designation and deletes the flight designator associated with it
-- delete-airports.php - takes an existing airport code and deletes the airport associated with it
-- delete-carrier.php - takes an existing carrier code and deletes the carrier associated with it
+### 4. Choose the correct region
 
-### Event Tickets
-Follow the steps of the [Quickstart](#quickstart) to get the quickstart up and running.
-In the event tickets folder the methods are:
-- create-template.php - creates the pass template for event tickets
-- create-venue.php - creates a venue for the event 
-- create-production.php - takes a new production name and creates a new production
-- create-ticket-type.php - takes templateId , from previous method, to use as base template and the productionId, created from previous method, and creates a new ticketType 
-- create-event.php - takes productionId and venueId ,from previous method, and creates a new Event
-- issue-event-ticket.php - takes ticketTypeId and  eventId, from previous method, and customer details creates a event ticket, and sends a welcome email to deliver event ticket url
-- validate-ticket.php - takes an existing ticket number as well as other details and validates it
-- redeem-ticket.php - takes an existing ticket number and redeems the event ticket associate with it
+Open .env and set PASSKIT_ADDRESS:
 
-## Documentation
-* [PassKit Membership Official Documentation](https://docs.passkit.io/protocols/member)
-* [PassKit Coupons Official Documentation](https://docs.passkit.io/protocols/coupon)
-* [PassKit Boarding Passes Official Documentation](https://docs.passkit.io/protocols/boarding)
-* [PassKit Event Tickets Official Documentation](https://docs.passkit.io/protocols/event-tickets/)
+- grpc.pub1.passkit.io for Europe
+- grpc.pub2.passkit.io for the USA
 
+Your PassKit data belongs to one region, so this must match Developer Tools → API Region.
 
-## Getting Help
-* [Online chat support](https://passkit.com/)
+### 5. Test the setup
+
+    composer example -- loyalty
+
+Other choices are coupons, tickets, and flights:
+
+    composer example -- coupons
+    composer example -- tickets
+    composer example -- flights
+
+All four commands run complete workflows: they create dependent resources, exercise the common methods in the correct order, print wallet pass URLs, and clean up the resources they created. You can also use the shorter Composer aliases:
+
+    composer example:loyalty
+    composer example:coupons
+    composer example:tickets
+    composer example:flights
+
+Set PASSKIT_KEEP_ASSETS=true in .env if you want to inspect the generated resources; you must then delete them manually.
+
+The focused single-method scripts remain available so developers can see individual protobuf requests. Run them from the repository root and replace blank IDs and sample recipient details before making live calls.
+
+## Flights
+
+Flights require an Apple pass certificate uploaded to PassKit. Add its Pass Type Identifier to .env:
+
+    PASSKIT_APPLE_CERTIFICATE=pass.com.example.airline
+
+The flight examples cover templates, carriers, airports, designators, flights, boarding passes, and cleanup methods.
+
+## Shared API
+
+src/PassKitApi.php provides a single, developer-friendly entry point for the PassKit API:
+
+- loyalty and membership
+- coupons
+- event tickets
+- flights
+- templates, locations, beacons, links, and images
+- analytics, distribution, scheduled messages, and direct messages
+- webhook/sink integrations and scanner configuration
+- read-only Apple certificate operations
+- raw projects and passes
+
+Example:
+
+    $config = PassKit\Quickstart\Config::fromEnvironment(__DIR__);
+    $pool = new PassKit\Quickstart\ConnectionPool($config);
+    $api = $pool->api();
+    $program = $api->loyalty->getProgram(new Io\Id(['id' => 'PROGRAM_ID']));
+    $pool->close();
+
+Unary methods return the protobuf response. Streaming methods return an iterator and also have a ToArray variant, such as listProgramsToArray, for small result sets.
+
+Broad operations such as segment deletion and bulk voiding are disabled by default. Set PASSKIT_ALLOW_DESTRUCTIVE=true only in controlled tooling, then use api->advanced('loyalty'), api->advanced('coupons'), or api->advanced('eventTickets').
+
+Administrative account deletion, password or API-secret changes, team administration, certificate upload, and NFC credential submission are intentionally excluded.
+
+Typed helpers are available for batchUpdateMembers, addMessage, getMessages, and cancelMessage. The generated client for any exposed domain is also available through api->client('domain') when you need SDK options not wrapped by the friendly facade.
+
+## Configuration
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| PASSKIT_ADDRESS | grpc.pub1.passkit.io | Account API region |
+| PASSKIT_PORT | 443 | gRPC port |
+| PASSKIT_ROOT_CERT | ./certs/ca-chain.pem | PassKit CA chain |
+| PASSKIT_PRIVATE_KEY | ./certs/key.pem | Client private key |
+| PASSKIT_CERTIFICATE | ./certs/certificate.pem | Client certificate |
+| PASSKIT_CONNECTION_MODE | pool | pool or single |
+| PASSKIT_POOL_SIZE | 5 | Reusable connection count |
+| PASSKIT_RECIPIENT_EMAIL | empty | Optional pass delivery email |
+| PASSKIT_APPLE_CERTIFICATE | empty | Required for flights |
+| PASSKIT_KEEP_ASSETS | false | Preserve generated resources |
+| PASSKIT_ALLOW_DESTRUCTIVE | false | Enable broad bulk calls |
+
+## Troubleshooting
+
+- Missing credential file: confirm the three paths in .env and run commands from the repository root.
+- Authentication failure: check the API region and ensure all three credential files came from the same SDK credential set.
+- Private key error: use the password chosen when SDK Credentials were generated, not your PassKit login password.
+- gRPC extension missing: compare php --ini and php -m; CLI PHP can use a different php.ini from a web server.
+- Flights skipped: upload an Apple pass certificate and set PASSKIT_APPLE_CERTIFICATE.
+
+## Tests and checks
+
+These checks do not call PassKit:
+
+    composer lint
+    composer test
+    composer check
+    composer security
+
+The parity suite confirms that every method exposed by the PHP facade exists in SDK 1.1.162.
+
+## Help
+
+- [PassKit documentation](https://docs.passkit.io/)
+- [PassKit Help Centre](https://help.passkit.com/)
+- [PHP SDK](https://github.com/PassKit/passkit-php-grpc-sdk)
+- support@passkit.com

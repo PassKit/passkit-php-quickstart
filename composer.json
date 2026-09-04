@@ -1,6 +1,6 @@
 {
     "name": "passkit/passkit-php-quickstart",
-    "description": "PHP gRPC SDK for Apple Wallet and Google Pay Membership / Loyalty / Access Cards, Coupons, Flights & Event-Tickets.",
+    "description": "PassKit PHP quickstart examples for membership cards, coupons, event tickets, and boarding passes.",
     "keywords": [
         "passkit",
         "php",
@@ -8,8 +8,7 @@
         "api",
         "grpc"
     ],
-    "version": "1.1.124",
-    "homepage": "http://passkit.com",
+    "homepage": "https://passkit.com",
     "license": "MIT",
     "authors": [
         {
@@ -24,12 +23,19 @@
         }
     ],
     "require": {
-        "grpc/grpc": "^v1.57.0",
-        "google/protobuf": "^v4.29.3",
-        "passkit/passkit-php-grpc-sdk": "1.1.124"
+        "php": ">=8.1",
+        "ext-grpc": "*",
+        "ext-openssl": "*",
+        "grpc/grpc": "^1.57",
+        "google/protobuf": "^5.36.1",
+        "passkit/passkit-php-grpc-sdk": "^1.1.162"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
     },
     "autoload": {
         "psr-4": {
+            "PassKit\\Quickstart\\": "src/",
             "Analytics\\": "lib/Analytics",
             "Cabin_codes\\": "lib/Cabin_codes",
             "Ct\\": "lib/Ct",
@@ -47,5 +53,24 @@
             "GPBMetadata\\ProtocGenOpenapiv2\\": "lib/extra/GPBMetadata/ProtocGenOpenapiv2",
             "Protoc_gen_openapiv2\\Options\\": "lib/extra/Grpc/Gateway/Protoc_gen_openapiv2/Options"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PassKit\\Quickstart\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "example": "php getting-started.php",
+        "example:loyalty": "php getting-started.php loyalty",
+        "example:coupons": "php getting-started.php coupons",
+        "example:tickets": "php getting-started.php tickets",
+        "example:flights": "php getting-started.php flights",
+        "test": "phpunit",
+        "lint": "php scripts/lint.php",
+        "check": [
+            "@lint",
+            "@test"
+        ],
+        "security": "composer audit"
     }
 }

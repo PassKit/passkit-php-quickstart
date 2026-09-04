@@ -1,11 +1,12 @@
 <?php
-require_once "../vendor/autoload.php";
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+PassKit\Quickstart\Env::load(dirname(__DIR__) . "/.env");
 
 putenv("GRPC_SSL_CIPHER_SUITES=HIGH+ECDSA");
 
 // MODIFY WITH THE VARIABLES OF YOUR PROGRAM, TIER AND EMAIL
 $programId = "";
-$tierId = "";
+$tierId = "base";
 $email = "";
 // enrol-member takes programId, tierId and memberDetails, creates a new member record, and sends a welcome email to deliver membership card url.
 // The method returns the member id. Member id is a part of card url.
@@ -13,7 +14,7 @@ try {
     $ca_filename = "ca-chain.pem";
     $key_filename = "key.pem";
     $cert_filename = "certificate.pem";
-    $path = "../certs/";
+    $path = dirname(__DIR__) . "/certs/";
 
     $credentials = Grpc\ChannelCredentials::createSsl(
         file_get_contents($path . $ca_filename),
@@ -21,7 +22,7 @@ try {
         file_get_contents($path . $cert_filename)
     );
     // Generate a members module client
-    $client = new Members\MembersClient('grpc.pub1.passkit.io:443', [
+    $client = new Members\MembersClient((getenv("PASSKIT_ADDRESS") ?: "grpc.pub1.passkit.io") . ":" . (getenv("PASSKIT_PORT") ?: "443"), [
         'credentials' => $credentials
     ]);
 

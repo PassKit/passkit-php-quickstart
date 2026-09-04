@@ -1,69 +1,25 @@
 <?php
 
-require '../vendor/autoload.php';
+declare(strict_types=1);
 
-use Grpc\ChannelCredentials;
-use Flights\Flight;
-use Members\MembersClient;
-use Single_use_coupons\SingleUseCouponsClient;
-use Event_tickets\EventTicketsClient;
-use Flights\FlightsClient;
-use Io\TemplatesClient;
+require dirname(__DIR__) . '/vendor/autoload.php';
 
-class GrpcConnectionPool
-{
-    private int $poolSize;
+use PassKit\Quickstart\Config;
+use PassKit\Quickstart\ConnectionPool;
 
-    public function __construct(int $poolSize)
-    {
-        $this->poolSize = $poolSize;
-    }
+$config = Config::fromEnvironment(dirname(__DIR__));
+$pool = new ConnectionPool($config);
 
-    public function buildSslContext(): object
-    {
-        $ca_filename = "ca-chain.pem";
-        $key_filename = "key.pem";
-        $cert_filename = "certificate.pem";
-        $path = "../certs/";
-
-        return ChannelCredentials::createSsl(
-            file_get_contents($path . $ca_filename),
-            file_get_contents($path . $key_filename),
-            file_get_contents($path . $cert_filename)
-        );
-    }
+try {
+    $api = $pool->api();
+    echo sprintf(
+        "Clients ready for %s using %s mode (%d connection%s).\n",
+        $config->target(),
+        $config->connectionMode,
+        $config->connectionMode === 'pool' ? $config->poolSize : 1,
+        ($config->connectionMode === 'pool' ? $config->poolSize : 1) === 1 ? '' : 's',
+    );
+    echo "Example: \$api->loyalty->getProgram(new Io\\Id(['id' => 'PROGRAM_ID']));\n";
+} finally {
+    $pool->close();
 }
-
-function grpcConnectionPooling()
-{
-    $grpcPool = new GrpcConnectionPool(5);
-    $credentials = $grpcPool->buildSslContext();
-
-    try {
-        // Generate gRPC clients with the correct credentials
-        $membersStub = new MembersClient('grpc.pub1.passkit.io:443', [
-            'credentials' => $credentials
-        ]);
-
-        $couponsStub = new SingleUseCouponsClient('grpc.pub1.passkit.io:443', [
-            'credentials' => $credentials
-        ]);
-
-        $eventStub = new EventTicketsClient('grpc.pub1.passkit.io:443', [
-            'credentials' => $credentials
-        ]);
-
-        $flightStub = new FlightsClient('grpc.pub1.passkit.io:443', [
-            'credentials' => $credentials
-        ]);
-
-        $templatesStub = new TemplatesClient('grpc.pub1.passkit.io:443', [
-            'credentials' => $credentials
-        ]);
-    } finally {
-        // Cleanup
-        unset($membersStub, $couponsStub, $eventStub, $flightStub, $templatesStub);
-    }
-}
-
-grpcConnectionPooling();

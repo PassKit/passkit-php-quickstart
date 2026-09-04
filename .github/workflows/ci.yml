@@ -20,7 +20,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: grpc, openssl
           coverage: none
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
       - run: composer validate --strict
       - run: composer check
       - run: composer audit

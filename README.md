@@ -8,7 +8,7 @@ Use the official PHP SDK to create and manage membership cards, loyalty passes, 
 
 ## Quick start
 
-You need PHP 8.1 or later, Composer, the PHP gRPC extension, a PassKit account, and PassKit SDK credentials.
+You need PHP 8.2 or later, Composer, the PHP gRPC extension, a PassKit account, and PassKit SDK credentials.
 
 ### 1. Install PHP and gRPC
 

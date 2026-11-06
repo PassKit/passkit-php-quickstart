@@ -31,7 +31,7 @@
         "passkit/passkit-php-grpc-sdk": "^1.1.162"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^13.4"
     },
     "autoload": {
         "psr-4": {
